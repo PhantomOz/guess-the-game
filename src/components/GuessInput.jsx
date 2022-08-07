@@ -46,7 +46,7 @@ function GuessInput() {
     if (parseInt(guess) === randInt) {
       newResult.result = "You got it 🥳";
       setGameConfig({ ...newResult });
-      getRandomInt(gameConfig.lowBound, gameConfig.highBound);
+      setRandInt(getRandomInt(gameConfig.lowBound, gameConfig.highBound));
     } else if (guess < randInt) {
       newResult.result = "Higher";
       setGameConfig({ ...newResult });
