@@ -3,16 +3,14 @@ import { GuessBoundsContext } from "../store/GuessBounds";
 
 function GuessInput() {
   const [guess, setGuess] = useState();
-  const [lastGuess, setLastGuess] = useState();
   const [error, setError] = useState([]);
-  const [result, setResult] = useState("");
-  const [{ lowBound, highBound }] = useContext(GuessBoundsContext);
+  const [gameConfig, setGameConfig] = useContext(GuessBoundsContext);
   const [randInt, setRandInt] = useState(1);
 
   useEffect(() => {
-    let x = getRandomInt(lowBound, highBound);
+    let x = getRandomInt(gameConfig.lowBound, gameConfig.highBound);
     setRandInt(x);
-  }, [lowBound, highBound]);
+  }, [gameConfig.highBound, gameConfig.lowBound]);
 
   //   For generating random Integers
   function getRandomInt(min, max) {
@@ -24,18 +22,18 @@ function GuessInput() {
   // for checking errors from input
   function handleCheck() {
     let errors = [];
-    if (!lowBound || !highBound) {
+    if (!gameConfig.lowBound || !gameConfig.highBound) {
       errors.push("Invalid Bounds");
     }
-    if (highBound - lowBound < 4) {
+    if (gameConfig.highBound - gameConfig.lowBound < 4) {
       errors.push(
         "The Lower and Higher Bounds show be in the range atleast +4"
       );
     }
     if (
       !guess ||
-      parseInt(guess) < parseInt(lowBound) ||
-      parseInt(guess) > parseInt(highBound)
+      parseInt(guess) < parseInt(gameConfig.lowBound) ||
+      parseInt(guess) > parseInt(gameConfig.highBound)
     ) {
       errors.push("Invalid Guess");
     }
@@ -44,20 +42,25 @@ function GuessInput() {
 
   // for checking if the guess is correct
   function checkGuess() {
+    let newResult = gameConfig;
     if (parseInt(guess) === randInt) {
-      setResult("You got it 🥳");
-      getRandomInt(lowBound, highBound);
+      newResult.result = "You got it 🥳";
+      setGameConfig({ ...newResult });
+      getRandomInt(gameConfig.lowBound, gameConfig.highBound);
     } else if (guess < randInt) {
-      setResult("Higher");
+      newResult.result = "Higher";
+      setGameConfig({ ...newResult });
     } else {
-      setResult("Lower");
+      newResult.result = "Lower";
+      setGameConfig({ ...newResult });
     }
-    setLastGuess(guess);
+    setGameConfig({ ...gameConfig, lastGuess: guess });
+    console.log(gameConfig.result);
   }
 
   //   To the handle the form submit method
   const handleSubmit = (e) => {
-    setResult("");
+    setGameConfig({ ...gameConfig, result: "" });
     e.preventDefault();
     setError([]);
     let err = handleCheck();
@@ -71,21 +74,22 @@ function GuessInput() {
   return (
     <div className="m-3">
       <p>
-        Guess the number between {lowBound} and {highBound}
+        Guess the number between {gameConfig.lowBound} and{" "}
+        {gameConfig.highBound}
       </p>
-      <p>Last Guess: {lastGuess}</p>
+      <p>Last Guess: {gameConfig.lastGuess}</p>
       {error.map((err) => (
         <div className="alert alert-danger">{err}</div>
       ))}
-      {result.length !== 0 && (
+      {gameConfig.result.length !== 0 && (
         <div
           className={
-            result === "You got it 🥳"
+            gameConfig.result === "You got it 🥳"
               ? "alert alert-success"
               : "alert alert-warning"
           }
         >
-          {result}
+          {gameConfig.result}
         </div>
       )}
       <form onSubmit={handleSubmit} className="input-group">

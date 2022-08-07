@@ -3,7 +3,6 @@ import { GuessBoundsContext } from "../store/GuessBounds";
 import BoundsInput from "./BoundsInput";
 
 function GameConfig() {
-  const initialState = { lowBound: 1, highBound: 10 };
   const [gameConfig, setGameConfig] = useContext(GuessBoundsContext);
 
   const handleChange = (e) => {
@@ -27,7 +26,9 @@ function GameConfig() {
       />
       <button
         className="btn btn-outline-primary m-3"
-        onClick={() => setGameConfig({ ...initialState })}
+        onClick={() =>
+          setGameConfig({ ...gameConfig, lastGuess: "None", result: "" })
+        }
       >
         Reset
       </button>
