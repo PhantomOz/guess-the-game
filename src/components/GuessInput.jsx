@@ -83,12 +83,15 @@ function GuessInput() {
         </div>
       )}
       <form onSubmit={handleSubmit} className="input-group">
-        <label className="input-group-text">Guess</label>
+        <label htmlFor="guess" className="input-group-text">
+          Guess
+        </label>
         <input
           type="number"
           value={guess}
           onChange={(e) => setGuess(e.target.value)}
           className="form-control"
+          id="guess"
         />
         <button type="submit" className="btn btn-success">
           Make Guess
