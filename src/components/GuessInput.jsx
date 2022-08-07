@@ -64,15 +64,17 @@ function GuessInput() {
       {error.map((err) => (
         <div className="alert alert-danger">{err}</div>
       ))}
-      <div
-        className={
-          result === "You got it 🥳"
-            ? "alert alert-success"
-            : "alert alert-warning"
-        }
-      >
-        {result}
-      </div>
+      {result.length !== 0 && (
+        <div
+          className={
+            result === "You got it 🥳"
+              ? "alert alert-success"
+              : "alert alert-warning"
+          }
+        >
+          {result}
+        </div>
+      )}
       <form onSubmit={handleSubmit} className="input-group">
         <label className="input-group-text">Guess</label>
         <input
