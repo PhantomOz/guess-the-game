@@ -28,8 +28,8 @@ function GuessInput() {
     }
     if (
       !guess ||
-      parseInt(guess) < parseInt(lowBound) ||
-      parseInt(guess) > parseInt(highBound)
+      parseInt(guess) <= parseInt(lowBound) ||
+      parseInt(guess) >= parseInt(highBound)
     ) {
       errors.push("Invalid Guess");
     }
