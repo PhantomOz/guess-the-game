@@ -36,7 +36,7 @@ function GuessInput() {
     setResult("");
     let x = getRandomInt(lowBound, highBound);
     if (parseInt(guess) === x) {
-      setResult("You got it");
+      setResult("You got it 🥳");
     } else if (guess < x) {
       setResult("Higher");
     } else {
@@ -66,7 +66,7 @@ function GuessInput() {
       ))}
       <div
         className={
-          result === "You got it"
+          result === "You got it 🥳"
             ? "alert alert-success"
             : "alert alert-warning"
         }
