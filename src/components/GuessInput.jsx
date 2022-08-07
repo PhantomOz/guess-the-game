@@ -64,7 +64,7 @@ function GuessInput() {
       {error.map((err) => (
         <div className="alert alert-danger">{err}</div>
       ))}
-      <p
+      <div
         className={
           result === "You got it"
             ? "alert alert-success"
@@ -72,7 +72,7 @@ function GuessInput() {
         }
       >
         {result}
-      </p>
+      </div>
       <form onSubmit={handleSubmit} className="input-group">
         <label className="input-group-text">Guess</label>
         <input
