@@ -3,6 +3,7 @@ import { GuessBoundsContext } from "../store/GuessBounds";
 
 function GuessInput() {
   const [guess, setGuess] = useState();
+  const [lastGuess, setLastGuess] = useState();
   const [error, setError] = useState([]);
   const [result, setResult] = useState("");
   const [{ lowBound, highBound }] = useContext(GuessBoundsContext);
@@ -42,6 +43,7 @@ function GuessInput() {
     } else {
       setResult("Lower");
     }
+    setLastGuess(guess);
   }
 
   //   To the handle the form submit method
@@ -61,6 +63,7 @@ function GuessInput() {
       <p>
         Guess the number between {lowBound} and {highBound}
       </p>
+      <p>Last Guess: {lastGuess}</p>
       {error.map((err) => (
         <div className="alert alert-danger">{err}</div>
       ))}
