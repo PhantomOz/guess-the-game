@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { GuessBoundsContext } from "../store/GuessBounds";
 
 function GuessInput() {
@@ -7,6 +7,12 @@ function GuessInput() {
   const [error, setError] = useState([]);
   const [result, setResult] = useState("");
   const [{ lowBound, highBound }] = useContext(GuessBoundsContext);
+  const [randInt, setRandInt] = useState(1);
+
+  useEffect(() => {
+    let x = getRandomInt(lowBound, highBound);
+    setRandInt(x);
+  }, [lowBound, highBound]);
 
   //   For generating random Integers
   function getRandomInt(min, max) {
@@ -28,8 +34,8 @@ function GuessInput() {
     }
     if (
       !guess ||
-      parseInt(guess) <= parseInt(lowBound) ||
-      parseInt(guess) >= parseInt(highBound)
+      parseInt(guess) < parseInt(lowBound) ||
+      parseInt(guess) > parseInt(highBound)
     ) {
       errors.push("Invalid Guess");
     }
@@ -38,10 +44,10 @@ function GuessInput() {
 
   // for checking if the guess is correct
   function checkGuess() {
-    let x = getRandomInt(lowBound, highBound);
-    if (parseInt(guess) === x) {
+    if (parseInt(guess) === randInt) {
       setResult("You got it 🥳");
-    } else if (guess < x) {
+      getRandomInt(lowBound, highBound);
+    } else if (guess < randInt) {
       setResult("Higher");
     } else {
       setResult("Lower");
