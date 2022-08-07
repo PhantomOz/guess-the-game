@@ -26,7 +26,11 @@ function GuessInput() {
         "The Lower and Higher Bounds show be in the range atleast +4"
       );
     }
-    if (!guess || guess < lowBound || guess > highBound) {
+    if (
+      !guess ||
+      parseInt(guess) < parseInt(lowBound) ||
+      parseInt(guess) > parseInt(highBound)
+    ) {
       errors.push("Invalid Guess");
     }
     return errors;
