@@ -34,7 +34,6 @@ function GuessInput() {
 
   // for checking if the guess is correct
   function checkGuess() {
-    setResult("");
     let x = getRandomInt(lowBound, highBound);
     if (parseInt(guess) === x) {
       setResult("You got it 🥳");
@@ -48,6 +47,7 @@ function GuessInput() {
 
   //   To the handle the form submit method
   const handleSubmit = (e) => {
+    setResult("");
     e.preventDefault();
     setError([]);
     let err = handleCheck();
