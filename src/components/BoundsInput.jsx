@@ -4,7 +4,7 @@ function BoundsInput({ value, handleChange, name }) {
   return (
     <div className="input-group mb-3">
       <label htmlFor={name} className="input-group-text">
-        Lower Bound
+        {name === "lowBound" ? "Lower Bound" : "Higher Bound"}
       </label>
       <input
         type="number"
